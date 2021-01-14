@@ -8,7 +8,7 @@ jobs:
       - restore_cache:
         key: deps-{{ checksum "requirements/dev.txt"}}-{{ .Environment.CACHE_VERSION }}
       - run:
-          name: Dépendances python
+          name: Dependances python
           command: |
             python3 -m venv venv
             . venv/bin/activate
