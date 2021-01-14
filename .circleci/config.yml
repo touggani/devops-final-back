@@ -9,7 +9,7 @@ jobs:
         key: deps-{{ checksum "requirements/dev.txt"}}-{{ .Environment.CACHE_VERSION }}
       - run:
         name: Dépendances python
-        command:|
+        command: |
           python3 -m venv venv
           . venv/bin/activate
           pip install -r requirements/dev.txt
