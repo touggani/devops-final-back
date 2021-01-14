@@ -6,7 +6,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-        key: deps-{{ checksum "requirements/dev.txt"}}-{{ .Environment.CACHE_VERSION }}
+          key: deps-{{ checksum "requirements/dev.txt"}}-{{ .Environment.CACHE_VERSION }}
       - run:
           name: Dependances python
           command: |
