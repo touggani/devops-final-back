@@ -2,7 +2,7 @@ version: 1
 jobs:
   build:
     docker:
-      - image: circleci/python:3.9
+      - image: circleci/python:3.9-buster-node-browsers
     steps:
       - checkout
       - restore_cache:
@@ -17,9 +17,3 @@ jobs:
         key: deps-{{ checksum "requirements/dev.txt"}}-{{ .Environment.CACHE_VERSION }}
         paths:
           - "venv"
-
-workflows:
-  version: 1
-  tp:
-    jobs:
-      - build
