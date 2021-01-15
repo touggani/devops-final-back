@@ -63,14 +63,13 @@ jobs:
             fi
 
 workflows:
-  version:
-  build_test_deploy:
+  version: 2
+  test_deploy:
     jobs:
       - build
       - test:
           requires:
             - build
       - deploy-heroku:
-          context: Heroku
           requires: 
             - build
