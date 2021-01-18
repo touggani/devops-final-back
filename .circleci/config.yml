@@ -27,32 +27,32 @@ jobs:
           key: deps-{{ checksum "requirements/dev.txt"}}-{{ .Environment.CACHE_VERSION }}
           paths: 
             - "venv"
-  test-phase:
-    docker: 
-      - image: circleci/python:3.9-buster-node-browsers
-        environment:
-          DATABASE_URL: postgresql://myUsr:somePwd@localhost:5432/psdb
-          FLASK_APP: autoapp.py
-          CONDUIT_SECRET: 'something-really-secret'
-          FLASK_DEBUG: 1
-      - image: circleci/postgres:9.6.2-alpine
-        environment:
-          POSTGRES_USER: myUsr
-          POSTGRES_DB: psdb
-          POSTGRES_PASSWORD: somePwd
-    steps:
-      - checkout
-      - restore_cache:
-          key: deps-{{ checksum "requirements/dev.txt"}}-{{ .Environment.CACHE_VERSION }}
-      - run: 
-          command : dockerize -wait tcp://localhost:5432 -timeout 1m
-      - run: 
-          name: Launching tests
-          command: |
-            . venv/bin/activate
-            pip install -r requirements/dev.txt
-            python3.7 -m flask db upgrade
-            python3.7 -m flask test
+  # test-phase:
+  #   docker: 
+  #     - image: circleci/python:3.9-buster-node-browsers
+  #       environment:
+  #         DATABASE_URL: postgresql://myUsr:somePwd@localhost:5432/psdb
+  #         FLASK_APP: autoapp.py
+  #         CONDUIT_SECRET: 'something-really-secret'
+  #         FLASK_DEBUG: 1
+  #     - image: circleci/postgres:9.6.2-alpine
+  #       environment:
+  #         POSTGRES_USER: myUsr
+  #         POSTGRES_DB: psdb
+  #         POSTGRES_PASSWORD: somePwd
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         key: deps-{{ checksum "requirements/dev.txt"}}-{{ .Environment.CACHE_VERSION }}
+  #     - run: 
+  #         command : dockerize -wait tcp://localhost:5432 -timeout 1m
+  #     - run: 
+  #         name: Launching tests
+  #         command: |
+  #           . venv/bin/activate
+  #           pip install -r requirements/dev.txt
+  #           python3.7 -m flask db upgrade
+  #           python3.7 -m flask test
   deploy-heroku:
     docker: 
       - image : buildpack-deps:trusty
@@ -69,7 +69,7 @@ jobs:
             if [ "$HTTPCODE" -ne 200 ];then
               echo "heroku app not responding, failing deploy"
               exit 1
-            fi
+            fi           
 workflows:
   build_test_deploy:
     jobs:
