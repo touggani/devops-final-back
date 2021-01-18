@@ -1,4 +1,4 @@
-version: 3
+version: 2.1
 jobs:
   build:
     docker:
@@ -70,6 +70,7 @@ jobs:
               echo "heroku app not responding, failing deploy"
               exit 1
             fi           
+
 workflows:
   build_test_deploy:
     jobs:
